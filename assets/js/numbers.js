@@ -17,17 +17,18 @@ function compute(expression) {
             }
         }
         var i = 0;
+        for (var k = 0; k<numbers.length;k++)
+            numbers[k] = Number(numbers[k]);
         while(operators.includes("*") || operators.includes("/")){
-            console.log(i);
             if(operators[i] == "*"){
-                tempNum = (parseInt(numbers[i],10)) * (parseInt(numbers[i+1],10));
-                numbers = creatNewArray(numbers, i,i+1,tempNum);
+                numbers[i] = (numbers[i]) * (numbers[i+1]);
+                numbers.splice(i+1,1);
                 operators.splice(i,1);
                 continue;
             }
             else if(operators[i] == "/"){
-                tempNum = (parseInt(numbers[i],10)) / (parseInt(numbers[i+1],10));
-                numbers = creatNewArray(numbers, i,i+1,tempNum);
+                numbers[i] = (numbers[i]) / (numbers[i+1]);
+                numbers.splice(i+1,1);
                 operators.splice(i,1);
                 continue;
             }
@@ -35,34 +36,24 @@ function compute(expression) {
         }
         i = 0;
         while(operators.includes("+") || operators.includes("-")){
-            if(operators[i] == "+"){
-                tempNum = (parseInt(numbers[i],10)) + (parseInt(numbers[i+1],10));
-                numbers = creatNewArray(numbers, i,i+1,tempNum);
+            if(operators[i] == "-"){
+                numbers[i] = parseFloat((numbers[i]) - (numbers[i+1]));
+                numbers.splice(i+1,1);
                 operators.splice(i,1);
                 continue;
             }
-            else if(operators[i] == "-"){
-                tempNum = (parseInt(numbers[i],10)) - (parseInt(numbers[i+1],10));
-                numbers = creatNewArray(numbers, i,i+1,tempNum);
+            else if(operators[i] == "+"){
+                numbers[i] = (numbers[i]) + (numbers[i+1]);
+                numbers.splice(i+1,1);
                 operators.splice(i,1);
                 continue;
             }
             i++;
 
     }
-     return parseInt(numbers);
+     return parseFloat(numbers);
 }
-function creatNewArray(numbers, left,right, newValue){
-    var numbers2 = [];
-    for (var i = 0; i< numbers.length;i++){
-        if (i == left)
-            numbers[i] = newValue;
-        if(i == right)
-            continue;
-        numbers2.push(numbers[i]);
-    }
-    return numbers2;
-}
+
 
 
 
